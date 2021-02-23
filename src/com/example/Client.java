@@ -10,18 +10,18 @@ public class Client {
     Socket clientSocket;
     Boolean isConnected = false;
 
-     public Client(String address, int port) {
+    public Client(String address, int port) {
         try {
             this.clientSocket = new Socket(address, port);
             this.isConnected = true;
             System.out.println("Connected to server.");
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
     }
 
-   public void sendMessage(String message) {
+    public void sendMessage(String message) {
         try {
             long unixTimestampT1 = Instant.now().toEpochMilli();
             System.out.println("Client T1: " + unixTimestampT1);
@@ -36,11 +36,11 @@ public class Client {
             long unixTimestampTserv = Long.parseLong(messageReceived);
             long unixTimestampT2 = Instant.now().toEpochMilli();
             System.out.println("Client T2: " + unixTimestampT2);
-            long delta = unixTimestampTserv + ((unixTimestampT2 - unixTimestampT1) / 2 ) - unixTimestampT2;
+            long delta = unixTimestampTserv + ((unixTimestampT2 - unixTimestampT1) / 2) - unixTimestampT2;
             Instant serverTime = Instant.ofEpochMilli(unixTimestampTserv + delta);
             System.out.println("Server time: " + serverTime.toString());
             System.out.println("Delta: " + delta);
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             Disconnect();
         }
@@ -51,7 +51,7 @@ public class Client {
             this.clientSocket.close();
             this.isConnected = false;
             System.out.println("Disconnected from server.");
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
